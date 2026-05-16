@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="particles"></div>
+
+<section class="hero">
+
+    <h1>LifeMap AI Assistant</h1>
+
+    <div class="card">
+        <p id="chat">Ask me anything about your career...</p>
+    </div>
+
+    <input type="text" id="question" placeholder="Type here...">
+
+    <button onclick="askAI()">Send</button>
+
+</section>
+
+<script>
+function askAI(){
+
+let q = document.getElementById("question").value.toLowerCase();
+
+let response = "";
+
+if(q.includes("doctor")){
+response = "Doctor is a very respected career with high responsibility and good salary.";
+}
+
+else if(q.includes("engineer")){
+response = "Engineering is perfect for logical and problem solving minds.";
+}
+
+else if(q.includes("programmer") || q.includes("coding")){
+response = "Programming is one of the best future careers because of AI and technology.";
+}
+
+else if(q.includes("future")){
+response = "Future jobs will focus on AI, robotics, and digital skills.";
+}
+
+else if(q.includes("salary")){
+response = "Salaries depend on career: doctors and programmers earn the highest.";
+}
+
+else{
+response = "I can help you with careers like doctor, engineer, programmer or architecture.";
+}
+
+let i = 0;
+document.getElementById("chat").innerHTML = "";
+
+let interval = setInterval(() => {
+
+document.getElementById("chat").innerHTML += response[i];
+i++;
+
+if(i >= response.length){
+clearInterval(interval);
+}
+
+}, 30);
+}
+</script>
+
+</body>
+</html>

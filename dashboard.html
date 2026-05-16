@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="particles"></div>
+
+<section class="hero">
+
+    <h1 id="welcome"></h1>
+
+    <div class="card">
+        <h2>Your Career</h2>
+        <p id="career"></p>
+    </div>
+
+    <div class="card">
+        <h2>Daily Motivation</h2>
+        <p id="quote"></p>
+    </div>
+
+    <button onclick="logout()">Logout</button>
+    <!-- AI CHATBOT -->
+<div class="card">
+
+    <h2>🤖 AI Assistant</h2>
+
+    <div id="chatBox"
+    style="
+    height:250px;
+    overflow-y:auto;
+    background:#111827;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:15px;
+    text-align:left;
+    ">
+    </div>
+
+    <input
+    type="text"
+    id="userInput"
+    placeholder="Ask something..."
+    style="
+    width:90%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    margin-bottom:10px;
+    color:white;
+    background:#1e293b;
+    "
+    >
+
+    <br>
+
+    <button onclick="sendMessage()">
+        Send
+    </button>
+
+</div>
+
+</section>
+
+<script>
+
+
+// 🔐 SESSION CHECK 24H
+
+
+const loginTime = localStorage.getItem("loginTime");
+
+const expireTime = 24 * 60 * 60 * 1000; // 25 orë
+
+if(!loginTime){
+window.location.href = "login.html";
+}
+
+else{
+
+const now = Date.now();
+
+if(now - loginTime > expireTime){
+
+localStorage.clear();
+alert("Session expired (25h). Please login again.");
+window.location.href = "login.html";
+}
+
+}
+
+
+//  USER + CAREER
+
+
+const user = localStorage.getItem("user");
+const career = localStorage.getItem("career");
+
+document.getElementById("welcome").innerText =
+"Welcome " + user;
+
+document.getElementById("career").innerText =
+career || "Not selected yet";
+
+//  DAILY MOTIVATION
+
+
+const quotes = [
+"Your future is created by what you do today.",
+"Success starts with discipline.",
+"Never give up.",
+"Dream big and work hard."
+];
+
+document.getElementById("quote").innerText =
+quotes[Math.floor(Math.random()*quotes.length)];
+
+
+//  LOGOUT
+
+
+function logout(){
+
+localStorage.clear();
+window.location.href = "login.html";
+
+}
+function sendMessage(){
+
+let input =
+document.getElementById("userInput");
+
+let message = input.value;
+
+if(message === "") return;
+
+let chat =
+document.getElementById("chatBox");
+
+// USER MESSAGE
+chat.innerHTML +=
+"<p><b>You:</b> " + message + "</p>";
+
+let reply = "";
+
+// AI ANSWERS
+if(message.toLowerCase().includes("doctor")){
+
+reply =
+"Doctors help people and study medicine.";
+
+}
+else if(message.toLowerCase().includes("engineer")){
+
+reply =
+"Engineering is great for logical thinkers.";
+
+}
+else if(message.toLowerCase().includes("programming")){
+
+reply =
+"Programming is one of the best future careers.";
+
+}
+else if(message.toLowerCase().includes("architecture")){
+
+reply =
+"Architecture mixes creativity and design.";
+
+}
+else{
+
+reply =
+"That sounds interesting! Keep exploring careers.";
+
+}
+
+// AI MESSAGE
+chat.innerHTML +=
+"<p><b>AI:</b> " + reply + "</p>";
+
+input.value = "";
+
+// AUTO SCROLL
+chat.scrollTop =
+chat.scrollHeight;
+
+}
+
+</script>
+
+</body>
+</html>

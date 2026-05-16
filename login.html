@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="particles"></div>
+
+<section class="hero">
+
+    <h1>Login</h1>
+
+    <input type="email" id="email" placeholder="Email">
+
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <p onclick="goRegister()">Create account</p>
+
+</section>
+
+<script>
+
+function login(){
+
+const email = document.getElementById("email").value;
+
+// ruaj user
+localStorage.setItem("user", email);
+
+// ruaj kohën e login
+localStorage.setItem("loginTime", Date.now());
+
+// shko dashboard
+window.location.href = "quiz.html";
+}
+
+function goRegister(){
+window.location.href = "register.html";
+}
+
+</script>
+
+</body>
+</html>

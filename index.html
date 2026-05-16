@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>LifeMap AI</title>
+	<link rel="stylesheet" href="style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"
+</head>
+<body>
+	<div class="language-switch">
+    <button onclick="setLang('sq')">AL</button>
+    <button onclick="setLang('en')">EN</button>
+</div>
+<div class="loader" id="loader">
+	<h1>
+		Analyzing Your Future...
+	</h1>
+</div>
+	<div class="particles">
+
+    <span style="left:10%; animation-delay:0s;"></span>
+    <span style="left:30%; animation-delay:2s;"></span>
+    <span style="left:50%; animation-delay:4s;"></span>
+    <span style="left:70%; animation-delay:1s;"></span>
+    <span style="left:90%; animation-delay:3s;"></span>
+
+</div>
+<div class="blur blur1"></div>
+<div class="blur blur2"></div>
+<nav>
+	<div class="logo">
+		LifeMap AI
+	</div>
+	<div class="language-button">
+		<button onclick="changeLanguage('sq')">AL</button>
+		<button onclick="changeLanguage('en')">EN</button>
+	</div>
+</nav>
+<section class="hero">
+	<h1 id="title">
+		Your Future Starts Here
+	</h1>
+	<p id="description">
+		Discover your ideal career path with artificial intelligence.
+	</p>
+	<a href="login.html">
+	<button id="startBtn">
+		Start Analysis
+	</button>
+</a>
+</section>
+<section class="features">
+	<div class="card">
+		<h2 id="card1Title">AI Analysis</h2>
+		<p id="card1Desc">
+			Smart career recommendations based on your personality.
+		</p>
+	</div>
+	<div class="card">
+		<h2 id="card2Title">Future Stimulation</h2>
+		<p id="card2Desc">
+		Visualize your future proffesion and workspace
+	</p>
+	</div>
+	<div class="card">
+		<h2 id="card3Title">Goal Tracking</h2>
+		<p id="card3Desc">
+			Track your progress and archieve your dreams
+		</p>
+	</div>
+</section>
+<script src="script.js"></script>
+
+</body>
+</html>

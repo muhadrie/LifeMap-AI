@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Results</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<section class="hero">
+
+    <!-- LANGUAGE BUTTONS -->
+    <div style="margin-bottom:20px;">
+
+        <button onclick="setLang('en')">
+            🇬🇧 English
+        </button>
+
+        <button onclick="setLang('sq')">
+            🇦🇱 Shqip
+        </button>
+
+    </div>
+
+    <!-- TITLE -->
+    <h1 id="title">
+        🎓 Your Result
+    </h1>
+
+    <!-- RESULT CARD -->
+    <div class="card">
+
+        <h2 id="name"></h2>
+
+        <p id="bestText">
+            You are best suited for:
+        </p>
+
+        <h2 id="career"></h2>
+
+        <p id="desc"></p>
+
+    </div>
+
+    <!-- BUTTONS -->
+    <button id="downloadBtn" onclick="download()">
+        📥 Download Certificate
+    </button>
+
+    <button onclick="goDashboard()">
+        ➡ Continue
+    </button>
+
+    <!-- MATCH -->
+    <div class="card" style="margin-top: 120px;">
+
+        <h2 id="matchTitle">
+            🎯 Career Match
+        </h2>
+
+        <p id="match"></p>
+
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="card">
+
+        <h2 id="roadmapTitle">
+            🧭 Career Roadmap
+        </h2>
+
+        <div id="roadmap"></div>
+
+    </div>
+
+    <!-- PERSONALITY -->
+    <div class="card">
+
+        <h2 id="personalityTitle">
+            🧠 Personality Type
+        </h2>
+
+        <p id="personality"></p>
+
+    </div>
+
+    <!-- FUN ZONE -->
+    <div class="card">
+
+        <h2 id="funTitle">
+            🎮 Fun Zone
+        </h2>
+
+        <p id="funText">
+            Try something fun!
+        </p>
+
+        <button id="spinBtn" onclick="spin()">
+            🎲 Career Spin
+        </button>
+
+        <button id="guessBtn" onclick="guess()">
+            🧩 Guess Game
+        </button>
+
+        <button id="moodBtn" onclick="mood()">
+            😂 Mood
+        </button>
+
+    </div>
+
+    <!-- CHART -->
+    <h2 id="chartTitle">
+        📊 Personality Score
+    </h2>
+
+    <canvas id="chart" width="300" height="300"></canvas>
+
+</section>
+
+<script>
+
+// =====================
+// LOGIN CHECK
+// =====================
+if(!localStorage.getItem("user")){
+
+window.location.href = "login.html";
+
+}
+
+// =====================
+// USER DATA
+// =====================
+const user =
+localStorage.getItem("user") || "Student";
+
+const career =
+localStorage.getItem("career") || "Unknown";
+
+document.getElementById("name").innerText =
+user;
+
+document.getElementById("career").innerText =
+career;
+
+// =====================
+// LANGUAGE
+// =====================
+let lang = "en";
+
+// =====================
+// TEXT DATA
+// =====================
+const data = {
+
+en:{
+
+title:"🎓 Your Result",
+
+best:"You are best suited for:",
+
+download:"📥 Download Certificate",
+
+matchTitle:"🎯 Career Match",
+
+roadmapTitle:"🧭 Career Roadmap",
+
+personalityTitle:"🧠 Personality Type",
+
+funTitle:"🎮 Fun Zone",
+
+chartTitle:"📊 Personality Score",
+
+spin:"🎲 Career Spin",
+
+guess:"🧩 Guess Game",
+
+mood:"😂 Mood",
+
+desc:{
+
+Doctor:"You are caring and responsible.",
+
+Engineer:"Logical and analytical.",
+
+Programmer:"Future tech builder.",
+
+Architect:"Creative designer."
+
+},
+
+roadmap:{
+
+Doctor:"• Study Biology<br>• Medical School<br>• Hospital Practice",
+
+Engineer:"• Learn Math<br>• Engineering Studies<br>• Build Projects",
+
+Programmer:"• Learn Coding<br>• Practice Daily<br>• Build Apps",
+
+Architect:"• Learn Drawing<br>• Study Design<br>• Create Projects"
+
+},
+
+personality:{
+
+Doctor:"Caring Helper",
+
+Engineer:"Logical Thinker",
+
+Programmer:"Tech Builder",
+
+Architect:"Creative Designer"
+
+}
+
+},
+
+sq:{
+
+title:"🎓 Rezultati Yt",
+
+best:"Ti je më i përshtatshëm për:",
+
+download:"📥 Shkarko Certifikatën",
+
+matchTitle:"🎯 Përputhja me Karrierën",
+
+roadmapTitle:"🧭 Hapat e Karrierës",
+
+personalityTitle:"🧠 Tipi i Personalitetit",
+
+funTitle:"🎮 Zona Argëtuese",
+
+chartTitle:"📊 Rezultati i Aftësive",
+
+spin:"🎲 Rrotullo Karrierën",
+
+guess:"🧩 Guess Game",
+
+mood:"😂 Mood",
+
+desc:{
+
+Doctor:"Ti je i kujdesshëm dhe i përgjegjshëm.",
+
+Engineer:"Ti mendon në mënyrë logjike.",
+
+Programmer:"Ti je ndërtues i teknologjisë.",
+
+Architect:"Ti je dizajner kreativ."
+
+},
+
+roadmap:{
+
+Doctor:"• Studio Biologji<br>• Fakulteti i Mjekësisë<br>• Praktikë në spital",
+
+Engineer:"• Mëso Matematikë<br>• Studime Inxhinierie<br>• Ndërto Projekte",
+
+Programmer:"• Mëso Programim<br>• Praktiko çdo ditë<br>• Ndërto Aplikacione",
+
+Architect:"• Mëso Vizatim<br>• Studime Dizajni<br>• Krijo Projekte"
+
+},
+
+personality:{
+
+Doctor:"Ndihmues i kujdesshëm",
+
+Engineer:"Mendimtar logjik",
+
+Programmer:"Ndërtues teknologjie",
+
+Architect:"Dizajner kreativ"
+
+}
+
+}
+
+};
+
+// =====================
+// CHANGE LANGUAGE
+// =====================
+function setLang(l){
+
+lang = l;
+
+document.getElementById("title").innerText =
+data[lang].title;
+
+document.getElementById("bestText").innerText =
+data[lang].best;
+
+document.getElementById("downloadBtn").innerText =
+data[lang].download;
+
+document.getElementById("matchTitle").innerText =
+data[lang].matchTitle;
+
+document.getElementById("roadmapTitle").innerText =
+data[lang].roadmapTitle;
+
+document.getElementById("personalityTitle").innerText =
+data[lang].personalityTitle;
+
+document.getElementById("funTitle").innerText =
+data[lang].funTitle;
+
+document.getElementById("chartTitle").innerText =
+data[lang].chartTitle;
+
+document.getElementById("spinBtn").innerText =
+data[lang].spin;
+
+document.getElementById("guessBtn").innerText =
+data[lang].guess;
+
+document.getElementById("moodBtn").innerText =
+data[lang].mood;
+
+// DESCRIPTION
+document.getElementById("desc").innerText =
+data[lang].desc[career];
+
+// ROADMAP
+document.getElementById("roadmap").innerHTML =
+data[lang].roadmap[career];
+
+// PERSONALITY
+document.getElementById("personality").innerText =
+data[lang].personality[career];
+
+// MATCH
+document.getElementById("match").innerText =
+Math.floor(70 + Math.random()*25) + "%";
+
+}
+
+// =====================
+// DOWNLOAD
+// =====================
+function download(){
+
+let text =
+user + "\nCareer: " + career;
+
+let blob =
+new Blob([text], {type:"text/plain"});
+
+let a =
+document.createElement("a");
+
+a.href =
+URL.createObjectURL(blob);
+
+a.download =
+"certificate.txt";
+
+a.click();
+
+}
+
+// =====================
+// DASHBOARD
+// =====================
+function goDashboard(){
+
+window.location.href =
+"dashboard.html";
+
+}
+
+// =====================
+// SPIN GAME
+// =====================
+function spin(){
+
+const careers = [
+"Doctor",
+"Engineer",
+"Programmer",
+"Architect"
+];
+
+let random =
+careers[Math.floor(Math.random()*careers.length)];
+
+document.getElementById("funText").innerText =
+random;
+
+}
+
+// =====================
+// GUESS GAME
+// =====================
+function guess(){
+
+let type =
+Math.floor(Math.random()*3);
+
+// NUMBER
+if(type === 0){
+
+let number =
+Math.floor(Math.random()*10)+1;
+
+let userGuess =
+prompt("Guess number 1-10");
+
+if(parseInt(userGuess) === number){
+
+document.getElementById("funText").innerText =
+"🎉 Correct!";
+
+}
+else{
+
+document.getElementById("funText").innerText =
+"❌ Wrong! Number was " + number;
+
+}
+
+}
+
+// EMOJI
+else if(type === 1){
+
+let emojis =
+["😀","🚀","🔥","🎓","💡"];
+
+let pick =
+emojis[Math.floor(Math.random()*emojis.length)];
+
+let userGuess =
+prompt("Guess emoji 😀 🚀 🔥 🎓 💡");
+
+if(userGuess === pick){
+
+document.getElementById("funText").innerText =
+"🎉 Correct emoji!";
+
+}
+else{
+
+document.getElementById("funText").innerText =
+"❌ It was " + pick;
+
+}
+
+}
+
+// QUIZ
+else{
+
+let ans =
+prompt("What is 5 + 3 ?");
+
+if(ans == 8){
+
+document.getElementById("funText").innerText =
+"🎉 Correct!";
+
+}
+else{
+
+document.getElementById("funText").innerText =
+"❌ Answer is 8";
+
+}
+
+}
+
+}
+
+// =====================
+// MOOD
+// =====================
+function mood(){
+
+const moods = [
+
+"😎 Future boss!",
+
+"🔥 Keep going!",
+
+"💡 Smart mind!",
+
+"🚀 Success loading!",
+
+"🎯 Right path!"
+
+];
+
+document.getElementById("funText").innerText =
+moods[Math.floor(Math.random()*moods.length)];
+
+}
+
+// =====================
+// CHART
+// =====================
+const ctx =
+document.getElementById("chart");
+
+new Chart(ctx, {
+
+type:"bar",
+
+data:{
+
+labels:[
+"Creativity",
+"Logic",
+"Tech",
+"Communication"
+],
+
+datasets:[{
+
+data:[
+Math.random()*100,
+Math.random()*100,
+Math.random()*100,
+Math.random()*100
+]
+
+}]
+
+}
+
+});
+
+// DEFAULT
+setLang("en");
+
+</script>
+
+</body>
+</html>
